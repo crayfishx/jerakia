@@ -57,7 +57,7 @@ class Jerakia::Datasource::Consul_kv < Jerakia::Datasource::Instance
     namespace = request.namespace
 
 
-    answer do |response|
+    reply do |response|
 
       break if paths.empty?
       path = paths.shift.split('/').compact
@@ -82,7 +82,7 @@ class Jerakia::Datasource::Consul_kv < Jerakia::Datasource::Instance
       rescue Faraday::ConnectionFailed => e
         raise Jerakia::Error, "Failed to connect to consul service: #{e.message}"
       end
-      response.submit result
+      response.namespace(namespace).submit result
     end
   end
 end
